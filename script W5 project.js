@@ -62,7 +62,7 @@ function tempFn(response) {
   //currentTemp.innerHTML = temp;
   document.querySelector("#currentTemp").innerHTML = temp;
   let currentHumid = document.querySelector("#humid");
-  currentHumid.innerHTML = humid; // document.querySelector("#humid").innerHTML = humid;
+  currentHumid.innerHTML = humid;
   let windSpeed = document.querySelector("#windSpeed");
-  windSpeed.innerHTML = wind; // document.querySelector("#windSpeed").innerHTML = wind;
+  windSpeed.innerHTML = wind;
 }
