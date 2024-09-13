@@ -41,10 +41,10 @@ footer {
   display: flex;
 }
 .current-weather-icon {
-  font-size: 27px;
   position: relative;
-  top: 75px;
-  left: 130px;
+  top: 55px;
+  left: 135px;
+  width: 80px;
 }
 .current-weather-temp {
   position: relative;

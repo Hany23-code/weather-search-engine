@@ -1,34 +1,3 @@
-function DayFn() {
-  let day = document.querySelector("#weekday");
-  let now = new Date();
-  let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Satudray",
-  ];
-  day.innerHTML = days[now.getDay()];
-}
-DayFn();
-
-function timeFn() {
-  let time = document.querySelector("#currentTime");
-  let now = new Date();
-  let hour = now.getHours();
-  let minute = now.getMinutes();
-  if (hour < 10) {
-    hour = "0" + hour;
-  }
-  if (minute < 10) {
-    minute = "0" + minute;
-  }
-
-  time.innerHTML = `${hour}:${minute}`;
-}
-timeFn();
 function cityFn(event) {
   event.preventDefault();
   let city = document.querySelector("#cityName");
@@ -40,8 +9,6 @@ function cityFn(event) {
 let form = document.querySelector("#city-input");
 form.addEventListener("submit", cityFn);
 
-// temperature and wind and humidity forecast
-
 document.querySelector("#city-input").addEventListener("submit", inputFn);
 function inputFn(event) {
   event.preventDefault();
@@ -50,19 +17,50 @@ function inputFn(event) {
   let apiKey = "694b5c6135cad6febfb0969t43a765co";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${apiKey}&units=metric`;
 
-  axios.get(apiUrl).then(tempFn);
+  axios.get(apiUrl).then(weatherFn);
 }
-function tempFn(response) {
+function weatherFn(response) {
   console.log(response.data);
-  let temp = Math.round(response.data.temperature.current);
-  let humid = response.data.temperature.humidity;
-  let wind = Math.round(response.data.wind.speed);
-
-  //let currentTemp = document.querySelector("#currentTemp");
-  //currentTemp.innerHTML = temp;
-  document.querySelector("#currentTemp").innerHTML = temp;
+  let temperature = document.querySelector("#currentTemp");
+  let daytime = document.querySelector("#day-time");
   let currentHumid = document.querySelector("#humid");
-  currentHumid.innerHTML = humid;
+  let description = document.querySelector("#description");
   let windSpeed = document.querySelector("#windSpeed");
-  windSpeed.innerHTML = wind;
+  let icon = document.querySelector("#icon");
+  let date = new Date(response.data.time * 1000);
+  let time = document.querySelector("#day-time");
+
+  time.innerHTML = dayTime(date);
+  temperature.innerHTML = Math.round(response.data.temperature.current);
+  currentHumid.innerHTML = response.data.temperature.humidity;
+  windSpeed.innerHTML = Math.round(response.data.wind.speed);
+  description.innerHTML = `, ${response.data.condition.description}`;
+  daytime.innerHTML = dayTime(date);
+  icon.innerHTML = `<img
+                src= ${response.data.condition.icon_url}
+                class="current-weather-icon"
+            />`;
+}
+
+function dayTime(date) {
+  let hour = date.getHours();
+  let minute = date.getMinutes();
+  if (hour < 10) {
+    hour = "0" + hour;
+  }
+  if (minute < 10) {
+    minute = "0" + minute;
+  }
+
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Satudray",
+  ];
+  let day = days[date.getDay()];
+  return `${day} ${hour}:${minute}`;
 }
