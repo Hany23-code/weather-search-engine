@@ -40,6 +40,7 @@ footer {
 .current-weather {
   display: flex;
 }
+
 .current-weather-icon {
   position: relative;
   top: 55px;
